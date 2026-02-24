@@ -102,7 +102,7 @@ export async function POST(request: Request) {
         .is('group_id', null);
 
       if (currentRound < (tournament.swiss_rounds ?? 3)) {
-        const byDivision = (standings.data ?? []).reduce<Record<string, typeof standings.data>>((acc, standing) => {
+        const byDivision = (standings.data ?? []).reduce<Record<string, NonNullable<typeof standings.data>>>((acc, standing) => {
           const division = standing.division ?? 'A';
           acc[division] = acc[division] ?? [];
           acc[division].push(standing);
@@ -111,14 +111,15 @@ export async function POST(request: Request) {
 
         const insertedMatches = [];
         for (const [division, divisionStandings] of Object.entries(byDivision)) {
+          const safeStandings = divisionStandings ?? [];
           const players = await supabase
             .from('users')
             .select('id, elo')
-            .in('id', divisionStandings.map((s) => s.user_id));
+            .in('id', safeStandings.map((s) => s.user_id));
 
           const pairings = generateSwissRound(
             (players.data ?? []).map((p) => ({ id: p.id, elo: p.elo ?? 1200, division: division as 'A' | 'B' })),
-            divisionStandings.map((s) => ({
+            safeStandings.map((s) => ({
               id: s.user_id,
               score: s.points,
               opponents: s.opponents ?? []
