@@ -55,7 +55,7 @@ export async function POST(request: Request) {
         return NextResponse.json({ error: 'ROUND_NOT_COMPLETE' }, { status: 400 });
       }
 
-      const byDivision = (roundMatches ?? []).reduce<Record<string, typeof roundMatches>>((acc, match) => {
+      const byDivision = (roundMatches ?? []).reduce<Record<string, NonNullable<typeof roundMatches>>>((acc, match) => {
         const division = match.division ?? 'A';
         acc[division] = acc[division] ?? [];
         acc[division].push(match);
@@ -64,7 +64,8 @@ export async function POST(request: Request) {
 
       const nextMatches = [];
       for (const [division, matches] of Object.entries(byDivision)) {
-        const winners = matches.map((match) => match.winner_id).filter(Boolean) as string[];
+        const safeMatches = matches ?? [];
+        const winners = safeMatches.map((match) => match.winner_id).filter(Boolean) as string[];
         for (let i = 0; i < winners.length; i += 2) {
           nextMatches.push({
             tournament_id: tournament.id,
