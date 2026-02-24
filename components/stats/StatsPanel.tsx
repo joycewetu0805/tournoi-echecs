@@ -42,7 +42,7 @@ export function StatsPanel() {
 
   return (
     <Card className="p-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <Badge>Statistiques Joueur</Badge>
           <h3 className="mt-4 text-xl font-semibold">Performance recente</h3>

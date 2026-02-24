@@ -9,56 +9,58 @@ export default function AdminPage() {
   return (
     <main className="min-h-screen bg-chess">
       <Section className="grid gap-8">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <Badge>Administration</Badge>
             <h2 className="mt-4 text-2xl font-semibold">Console de controle</h2>
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             <Link href="/admin/tournaments">
-              <Button variant="ghost">Creer un tournoi</Button>
+              <Button variant="ghost" className="w-full sm:w-auto">Creer un tournoi</Button>
             </Link>
-            <Button variant="ghost">Publier la liste</Button>
-            <Button>Lancer le tirage</Button>
+            <Button variant="ghost" className="w-full sm:w-auto">Publier la liste</Button>
+            <Button className="w-full sm:w-auto">Lancer le tirage</Button>
           </div>
         </div>
         <Card className="p-6">
           <h3 className="text-lg font-semibold">Paiements M-Pesa a valider</h3>
-          <Table className="mt-4">
-            <thead>
-              <tr className="table-row">
-                <Th>Joueur</Th>
-                <Th>Montant</Th>
-                <Th>Statut</Th>
-                <Th>Action</Th>
-              </tr>
-            </thead>
-            <tbody>
-              {['Amir', 'Lina', 'Sofiane'].map((name) => (
-                <tr key={name} className="table-row">
-                  <Td>{name}</Td>
-                  <Td>10 USD</Td>
-                  <Td className="text-accent-400">En attente</Td>
-                  <Td>
-                    <Button className="text-xs">Valider</Button>
-                  </Td>
+          <div className="mt-4 overflow-x-auto">
+            <Table>
+              <thead>
+                <tr className="table-row">
+                  <Th>Joueur</Th>
+                  <Th>Montant</Th>
+                  <Th>Statut</Th>
+                  <Th>Action</Th>
                 </tr>
-              ))}
-            </tbody>
-          </Table>
+              </thead>
+              <tbody>
+                {['Amir', 'Lina', 'Sofiane'].map((name) => (
+                  <tr key={name} className="table-row">
+                    <Td>{name}</Td>
+                    <Td>10 USD</Td>
+                    <Td className="text-accent-400">En attente</Td>
+                    <Td>
+                      <Button className="text-xs">Valider</Button>
+                    </Td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
         </Card>
         <Card className="p-6">
           <h3 className="text-lg font-semibold">Saisie des scores</h3>
           <div className="mt-4 grid gap-3 text-sm">
-            <div className="flex items-center justify-between border-b border-white/5 pb-2">
+            <div className="flex flex-col gap-3 border-b border-white/5 pb-2 sm:flex-row sm:items-center sm:justify-between">
               <span>Pool C · Match 2</span>
               <span className="text-accent-400">En attente</span>
-              <Button variant="ghost" className="text-xs">Entrer score</Button>
+              <Button variant="ghost" className="text-xs w-full sm:w-auto">Entrer score</Button>
             </div>
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <span>Quarterfinal 1</span>
               <span className="text-steel-500">Verrouille</span>
-              <Button variant="ghost" className="text-xs" disabled>
+              <Button variant="ghost" className="text-xs w-full sm:w-auto" disabled>
                 Verrouille
               </Button>
             </div>

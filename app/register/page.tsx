@@ -7,8 +7,8 @@ export default function RegisterPage() {
   return (
     <main className="min-h-screen bg-chess">
       <Section className="grid gap-8 md:grid-cols-[1.1fr_0.9fr]">
-        <Card className="p-8">
-          <div className="flex items-center justify-between">
+        <Card className="p-6 md:p-8">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <Badge>Inscription</Badge>
             <span className="text-xs uppercase tracking-widest text-steel-500">Lun 00h - Ven 22h</span>
           </div>
@@ -20,7 +20,7 @@ export default function RegisterPage() {
             <Button type="submit">Demander l'inscription</Button>
           </form>
         </Card>
-        <Card className="p-8">
+        <Card className="p-6 md:p-8">
           <Badge>Reglement</Badge>
           <ul className="mt-6 space-y-3 text-sm text-steel-300">
             <li>Cadence: 15 min + 10 sec.</li>

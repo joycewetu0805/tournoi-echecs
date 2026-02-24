@@ -4,9 +4,9 @@ const phases = ['Pool', 'Quarter', 'Semi', 'Final'];
 
 export function Timeline({ current }: { current: number }) {
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4 overflow-x-auto pb-2">
       {phases.map((phase, index) => (
-        <div key={phase} className="flex items-center gap-3">
+        <div key={phase} className="flex items-center gap-3 whitespace-nowrap">
           <div
             className={clsx(
               'h-3 w-3 rounded-full border',

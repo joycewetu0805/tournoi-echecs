@@ -23,26 +23,28 @@ export default async function LeaderboardPage() {
           <p className="mt-2 text-sm text-steel-400">Classement interne base sur l'ELO.</p>
         </div>
         <Card className="p-6">
-          <Table>
-            <thead>
-              <tr className="table-row">
-                <Th>Rang</Th>
-                <Th>Joueur</Th>
-                <Th>ELO</Th>
-                <Th>Matches</Th>
-              </tr>
-            </thead>
-            <tbody>
-              {(players ?? []).map((player, index) => (
-                <tr key={player.id} className="table-row">
-                  <Td>#{index + 1}</Td>
-                  <Td>{player.email ?? 'Joueur'}</Td>
-                  <Td className="text-accent-400">{player.elo}</Td>
-                  <Td>{player.matches_played}</Td>
+          <div className="overflow-x-auto">
+            <Table>
+              <thead>
+                <tr className="table-row">
+                  <Th>Rang</Th>
+                  <Th>Joueur</Th>
+                  <Th>ELO</Th>
+                  <Th>Matches</Th>
                 </tr>
-              ))}
-            </tbody>
-          </Table>
+              </thead>
+              <tbody>
+                {(players ?? []).map((player, index) => (
+                  <tr key={player.id} className="table-row">
+                    <Td>#{index + 1}</Td>
+                    <Td>{player.email ?? 'Joueur'}</Td>
+                    <Td className="text-accent-400">{player.elo}</Td>
+                    <Td>{player.matches_played}</Td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
         </Card>
       </Section>
     </main>
