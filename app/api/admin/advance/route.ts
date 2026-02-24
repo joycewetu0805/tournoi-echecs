@@ -158,7 +158,7 @@ export async function POST(request: Request) {
         .is('group_id', null)
         .order('points', { ascending: false });
 
-      const byDivision = (swissStandings ?? []).reduce<Record<string, typeof swissStandings>>((acc, standing) => {
+      const byDivision = (swissStandings ?? []).reduce<Record<string, NonNullable<typeof swissStandings>>>((acc, standing) => {
         const division = standing.division ?? 'A';
         acc[division] = acc[division] ?? [];
         acc[division].push(standing);
@@ -169,9 +169,10 @@ export async function POST(request: Request) {
       let qualifierCount = 0;
 
       for (const [division, standingsByDivision] of Object.entries(byDivision)) {
-        const divisionQualifierCount = Math.min(8, standingsByDivision.length);
+        const safeStandings = standingsByDivision ?? [];
+        const divisionQualifierCount = Math.min(8, safeStandings.length);
         qualifierCount += divisionQualifierCount;
-        const qualifiedIds = standingsByDivision.slice(0, divisionQualifierCount).map((s) => s.user_id);
+        const qualifiedIds = safeStandings.slice(0, divisionQualifierCount).map((s) => s.user_id);
         const { data: qualifiedPlayers } = await supabase
           .from('users')
           .select('id, elo')
@@ -208,7 +209,7 @@ export async function POST(request: Request) {
       .eq('tournament_id', tournament.id)
       .not('group_id', 'is', null);
 
-    const groupedByDivision = (groupStandings ?? []).reduce<Record<string, typeof groupStandings>>((acc, standing) => {
+    const groupedByDivision = (groupStandings ?? []).reduce<Record<string, NonNullable<typeof groupStandings>>>((acc, standing) => {
       const division = standing.division ?? 'A';
       acc[division] = acc[division] ?? [];
       acc[division].push(standing);
@@ -218,9 +219,10 @@ export async function POST(request: Request) {
     const createdMatches = [];
 
     for (const [division, standingsByDivision] of Object.entries(groupedByDivision)) {
-      const qualifiers = standingsByDivision
+      const safeStandings = standingsByDivision ?? [];
+      const qualifiers = safeStandings
         .sort((a, b) => b.points - a.points)
-        .reduce<Record<string, typeof standingsByDivision>>((acc, standing) => {
+        .reduce<Record<string, typeof safeStandings>>((acc, standing) => {
           const groupId = standing.group_id as string;
           acc[groupId] = acc[groupId] ?? [];
           acc[groupId].push(standing);
