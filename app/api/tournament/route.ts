@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { createSupabaseServiceClient } from '@/lib/supabase/server';
 import { getWeeklySchedule, isPauseTime, isTournamentLive, isPublishTime } from '@/lib/time';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   const supabase = createSupabaseServiceClient();
   const { data: tournament } = await supabase
